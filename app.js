@@ -83,14 +83,7 @@ for (let i = 0; btnMode.length > i ; i++) {
      localStorage.setItem('theme', mode);
  }
 
-// on windows load get user's location weather info: navigator geolocation data(long|lat)
-// - on window load
-//  fetch request using openweather by geolocation data and we can get data about the location of the user
-
-let date;
-let dayName;
-let time;
-let day
+let date,dayName,time,day;
 
 window.onload = (event) => {
     getLocation()
@@ -102,7 +95,7 @@ function currentCityTime(){
     date = new Date()
     dayName = new Intl.DateTimeFormat('en-US', {weekday: 'long'}).format();
     time=`${date.getHours()}:${date.getMinutes()}`
-    day = `${date.getDate()}`            
+    day = `${date.getDate()}`
     CurrentCityTime.innerText=time
     TownDate.innerText = `${day}, ${dayName} ${ time}`
 }
@@ -133,7 +126,6 @@ function getLocation(){
             currentCityTime()
             TownHumidity.innerText= `Humidity: ${data.main.humidity}%`
             console.log(data)
-
         })
         }, (error)=>{
             console.log(`ERROR(${err.code}): ${err.message}`);
@@ -173,7 +165,5 @@ document.addEventListener('keydown', function(event){
         }
     }
 })
-
-
 // event handler
 menuBtn.addEventListener('click', menuDisplay)
