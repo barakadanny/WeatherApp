@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link id="theme-mode" rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <section class="container">
+        <!-- header -->
+        <header>
+            <div class="header-bar"></div>
+            <div class="header-content">
+                <div class="burger">
+                    <div class="menu-bar">
+                        <div class="bar br-1"></div>
+                        <div class="bar br-2"></div>
+                        <div class="bar br-3"></div>
+                    </div>
+                </div>
+                <div class="current-time">
+                    <h1 class="current-town"></h1>
+                    <h2 class="current-town-time"></h2>
+                </div>
+            </div>
+        </header>
+        <!-- Settings for -->
+        <div class="settings set-desactivate">
+            <div class="set-bg-color">
+                <!-- Color bg -->
+                <h3>Choose the background</h3>
+                <div class="color">
+                    <div data-mode="blue"  class="modes ">
+                        <img class="active blue" src="./images/blue.png" alt="">
+                    </div>
+                    <div data-mode="red"  class="modes">
+                        <img class="active red"  src="./images/red.png" alt="">
+                    </div>
+                    <div data-mode="yellow" class="modes ">
+                        <img class="active yellow"  src="./images/yellow.png" alt="">
+                    </div>
+                    <div data-mode="green" class="modes">
+                        <img class="active green" src="./images/green.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="set-sound">
+                <h3>Sound</h3>
+                <img src="./images/akar-icons_sound-off.png" alt="">
+                <img src="./images/akar-icons_sound-on.png" alt="">
+            </div>
+        </div>
+        <!-- main content -->
+        <div class="main">
+            <!--  Main left content -->
+            <div class="main-left">
+                <div class="search-section">
+                    <div>
+                        <input class="input-data" type="text">
+                        <button class="search-btn">Search</button>
+                    </div>
+                </div>
+                <div class="result">
+                    <div class="res-top">
+                        <h1><span id="temp-id"></span>&deg;C</h1>
+                        <h2 class="city-name"></h2>
+                        <img class="weather-icon" src="" alt="">
+                    </div>
+                    <div class="res-bottom">
+                        <h3 class="town-date">23, monday 16:08</h3>
+                        <h3 class="town-humidity">Humidity</h3>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- main right content -->
+            <div class="main-right">
+                <div>
+                    <div class="card">
+                        <div class="card-city">
+                            <div class="card-city-name">
+                                <h1 class="name">Goma</h1>
+                                <h2 class="time">17 : 24</h2>
+                            </div>
+                            
+                            <div class="date">Monday, 23</div>
+                        </div>
+                        <div class="card-temp">
+                            <h2 class="temp-name">19&deg;C</h2>
+                            <span class="temp-icon">
+                                <img src="./images/clear-cloudy.png" alt="">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-city">
+                            <div class="card-city-name">
+                                <h1 class="name">Kishansa</h1>
+                                <h2 class="time">17 : 24</h2>
+                            </div>
+                            
+                            <div class="date">Monday, 23</div>
+                        </div>
+                        <div class="card-temp">
+                            <h2 class="temp-name">20&deg;C</h2>
+                            <span class="temp-icon">
+                                <img src="./images/clear-cloudy.png" alt="">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-city">
+                            <div class="card-city-name">
+                                <h1 class="name">New york</h1>
+                                <h2 class="time">17 : 24</h2>
+                            </div>
+                            
+                            <div class="date">Monday, 23</div>
+                        </div>
+                        <div class="card-temp">
+                            <h2 class="temp-name">26&deg;C</h2>
+                            <span class="temp-icon">
+                                <img src="./images/drizzle.png" alt="">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-city">
+                            <div class="card-city-name">
+                                <h1 class="name">Zambia</h1>
+                                <h2 class="time">17 : 24</h2>
+                            </div>
+                            
+                            <div class="date">Monday, 23</div>
+                        </div>
+                        <div class="card-temp">
+                            <h2 class="temp-name">28&deg;C</h2>
+                            <span class="temp-icon">
+                                <img src="./images/hail.png" alt="">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <script type="text/javascript" src="./app.js"></script>
+</body>
+</html>
