@@ -90,7 +90,6 @@ window.onload = (event) => {
     currentCityTime()
     date = new Date()
 }
-
 function currentCityTime(){
     date = new Date()
     dayName = new Intl.DateTimeFormat('en-US', {weekday: 'long'}).format();
