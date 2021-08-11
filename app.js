@@ -132,8 +132,6 @@ function getLocation(){
         }, {enableAccuracy:true, timeout:5000})
 }
 
-
-
 function search(){
     query = 'q='+inputData.value
     
@@ -150,7 +148,7 @@ function search(){
         console.log(data)
     })
 
-.catch(err => alert("wrong city name"))
+.catch(err => alert("Wrong city name, check the name of the city you just entered"))
 }
 searchBtn.addEventListener('click', function(){
     search()
