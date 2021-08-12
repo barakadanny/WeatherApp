@@ -1,6 +1,7 @@
 'use strict';
 const menuBtn = document.querySelector('.menu-bar');
 const setting = document.querySelector('.settings');
+const main = document.querySelector(".main");
 
 
 const headerBar = document.querySelector('.header-bar');
@@ -35,12 +36,19 @@ if(theme == null){
 
 // displaying the section
 const menuDisplay=()=>{
+    main.classList.toggle('set-black');
     setting.classList.toggle('set-active');
     menuBtn.classList.toggle("close");
+    
 }
+menuBtn.addEventListener('click', menuDisplay)
+// main.addEventListener('click',()=>{
+
+// })
 
 // colors selection
 let btnMode = document.getElementsByClassName("modes");
+
 
 for (let i = 0; btnMode.length > i ; i++) {
     btnMode[i].addEventListener('click',()=>{
@@ -83,18 +91,22 @@ for (let i = 0; btnMode.length > i ; i++) {
      localStorage.setItem('theme', mode);
  }
 
-let date,dayName,time,day;
+let date
+let dayName
+let time
+let day
 
 window.onload = (event) => {
     getLocation()
     currentCityTime()
     date = new Date()
 }
+
 function currentCityTime(){
     date = new Date()
     dayName = new Intl.DateTimeFormat('en-US', {weekday: 'long'}).format();
     time=`${date.getHours()}:${date.getMinutes()}`
-    day = `${date.getDate()}`
+    day = `${date.getDate()}`            
     CurrentCityTime.innerText=time
     TownDate.innerText = `${day}, ${dayName} ${ time}`
 }
@@ -125,6 +137,7 @@ function getLocation(){
             currentCityTime()
             TownHumidity.innerText= `Humidity: ${data.main.humidity}%`
             console.log(data)
+
         })
         }, (error)=>{
             console.log(`ERROR(${err.code}): ${err.message}`);
@@ -133,7 +146,6 @@ function getLocation(){
 
 function search(){
     query = 'q='+inputData.value
-    
     fetch(apiEndpoint+query+metric+apiKey)
     .then(response => response.json())
     .then(data => {
@@ -146,8 +158,7 @@ function search(){
         TempId.innerText = Math.floor(tempr)
         console.log(data)
     })
-
-.catch(err => alert("Wrong city name, check the name of the city you just entered"))
+    .catch(err => alert("wrong city name"))
 }
 searchBtn.addEventListener('click', function(){
     search()
@@ -162,5 +173,6 @@ document.addEventListener('keydown', function(event){
         }
     }
 })
+
+
 // event handler
-menuBtn.addEventListener('click', menuDisplay)
