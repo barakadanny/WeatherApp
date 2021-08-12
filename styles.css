@@ -1,3 +1,4 @@
+/* Desktop */
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
 * {
   padding: 0;
@@ -86,7 +87,7 @@ div.br-3 {
   width: 150px;
   height: 100%;
   background-color: var(--primary-color);
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   color: white;
 }
@@ -95,12 +96,12 @@ h1.current-town {
   font-weight: 400;
 }
 h2.current-town-time {
-  font-size: 35px;
+  font-size: 2rem;
   font-weight: 600;
 }
 /* Settinsg */
 .settings {
-  position: absolute;
+  position: fixed;
   top: 15vh;
   left: 0;
   width: 180px;
@@ -109,6 +110,7 @@ h2.current-town-time {
   padding: 10px;
   transform: translateX(-100%);
   transition: all 500ms;
+  z-index: 999;
 }
 /* settings css to activate and desactivate */
 /* .set-desactivate {
@@ -154,20 +156,37 @@ div.color img.active {
   display: flex;
   height: 100%;
 }
+.set-black {
+  transition: all 10s ease-in-out;
+}
+.set-black::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 .main-left {
-  width: 60%;
   height: 100%;
-  padding: 20px;
-  padding-top: 15vh;
+  width: 60%;
+  display: flex;
+  align-items: flex-end;
+}
+.main-left-content {
+  width: 70%;
+  height: 90%;
+  margin: 0 auto;
+  padding: 10px;
 }
 .main-left div.search-section {
   width: 100%;
   height: 15%;
-  display: grid;
-  place-content: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
 }
-.main-left div.search-section > div {
-  width: 35rem;
+.main-left div.search-section div.search {
+  width: 100%;
   height: 35px;
   background-color: var(--second-color);
   display: flex;
@@ -179,7 +198,7 @@ div.color img.active {
   flex: 1;
   color: var(--primary-color);
   font-size: 18px;
-  padding: 5px;
+  padding: 10px;
   letter-spacing: 1px;
   border: none;
 }
@@ -202,41 +221,37 @@ div.color img.active {
   width: 100%;
   height: 85%;
   color: white;
+  margin: auto;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   position: relative;
 }
 div.res-top {
-  height: 70%;
-  width: 65%;
-  margin: auto;
+  height: 60%;
+  width: 100%;
   display: flex;
-  /* padding-top: 3rem; */
   align-items: flex-end;
 }
 div.res-top img {
-  height: 200px;
-  width: 200px;
-  position: absolute;
-  top: 50%;
-  right: 100px;
-  transform: translateY(-50%);
+  margin-bottom: 40px;
 }
 .res-top h1 {
   font-size: 10rem;
   font-weight: 200;
-  /* height: 2rem; */
+}
+.res-top div.temp-description {
+  display: flex;
+  flex-direction: column-reverse;
 }
 .res-top h2 {
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 40px;
+  margin: 0 0 45px 0;
 }
 
 div.res-bottom {
   height: 30%;
-  width: 65%;
-  margin: auto;
+  width: 100%;
   font-size: 16px;
   padding-top: 20px;
   font-weight: 200;
@@ -248,24 +263,25 @@ div.res-bottom h3 {
 
 .main-right {
   width: 40%;
-  height: inherit;
+  height: 100%;
   background-color: var(--primary-rgba-color);
   backdrop-filter: blur(20px);
-  padding: 20px;
-  padding-top: 50px;
+  display: flex;
+  align-items: flex-end;
 }
-.main-right > div {
-  padding-top: 15vh;
+.main-right div.right-content-saved {
+  width: 90%;
+  margin: 0 auto;
+  height: 80%;
 }
 .card {
   background-color: var(--second-color);
   display: flex;
   width: 100%;
-  height: 120px;
   padding: 10px;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .card-city {
   display: flex;
@@ -296,7 +312,7 @@ div.date {
   display: flex;
   align-items: center;
   padding-top: 20px;
-  padding-left: 80px;
+  justify-content: flex-end;
 }
 .card-temp h2 {
   font-size: 45px;
@@ -304,4 +320,92 @@ div.date {
 }
 .temp-icon {
   padding-top: 15px;
+}
+/* tablets */
+@media screen and (max-width: 1024px) {
+  .main-left {
+    width: 50%;
+  }
+  .main-left-content {
+    width: 90%;
+    padding: 0;
+  }
+  .res-top h2 {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  .main-right {
+    width: 50%;
+  }
+}
+/* mobile */
+@media screen and (max-width: 810px) {
+  .main {
+    flex-direction: column;
+  }
+  .main-left {
+    height: auto;
+    width: 100%;
+  }
+  .main-left-content {
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    padding-top: 20vh;
+  }
+  .main-right {
+    width: 100%;
+    height: auto;
+  }
+
+  div.res-top {
+    height: 60%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .res-top h1 {
+    font-size: 10rem;
+    width: 100%;
+  }
+
+  div.res-bottom {
+    height: 40%;
+    text-align: center;
+  }
+
+  .main-right div.right-content-saved {
+    height: 97%;
+  }
+
+  .burger {
+    margin-left: 20px;
+  }
+  .header-content {
+    background-color: var(--primary-rbga-color);
+    box-shadow: 0px 20px 1rem rgba(0, 0, 0, 0.274);
+  }
+
+  div.res-top img {
+    margin-bottom: 0;
+  }
+
+  .res-top div.temp-description {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+  }
+  .res-top h2 {
+    font-size: 20px;
+    font-weight: 400;
+    padding-top: 40px;
+  }
+
+  .main-left div.search-section input {
+    background-color: var(--text-color);
+  }
+
+  .main-right {
+    background-color: var(--primary-color);
+  }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather App</title>
+    <title>Weather App | BrainGhost</title>
     <link rel="stylesheet" href="./styles.css" />
     <link id="theme-mode" rel="stylesheet" href="./styles.css" />
   </head>
@@ -57,27 +57,31 @@
       <div class="main">
         <!--  Main left content -->
         <div class="main-left">
-          <div class="search-section">
-            <div>
-              <input class="input-data" type="text" />
-              <button class="search-btn">Search</button>
+          <div class="main-left-content">
+            <div class="search-section">
+              <div class="search">
+                <input class="input-data" type="text" />
+                <button class="search-btn">Search</button>
+              </div>
             </div>
-          </div>
-          <div class="result">
-            <div class="res-top">
-              <h1><span id="temp-id"></span>&deg;C</h1>
-              <h2 class="city-name"></h2>
-              <img class="weather-icon" src="" alt="" />
-            </div>
-            <div class="res-bottom">
-              <h3 class="town-date">23, monday 16:08</h3>
-              <h3 class="town-humidity">Humidity</h3>
+            <div class="result">
+              <div class="res-top">
+                <h1><span id="temp-id"></span>&deg;C</h1>
+                <div class="temp-description">
+                  <h2 class="city-name"></h2>
+                  <img class="weather-icon" src="" alt="" />
+                </div>
+              </div>
+              <div class="res-bottom">
+                <h3 class="town-date">23, monday 16:08</h3>
+                <h3 class="town-humidity">Humidity</h3>
+              </div>
             </div>
           </div>
         </div>
         <!-- main right content -->
         <div class="main-right">
-          <div>
+          <div class="right-content-saved">
             <div class="card">
               <div class="card-city">
                 <div class="card-city-name">
