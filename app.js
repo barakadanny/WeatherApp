@@ -2,12 +2,13 @@
 const menuBtn = document.querySelector('.menu-bar');
 const setting = document.querySelector('.settings');
 const main = document.querySelector(".main");
+const navigation = document.querySelector(".navigation");
+const nav = document.querySelectorAll(".nav");
 
-
-const headerBar = document.querySelector('.header-bar');
-const currentTime = document.querySelector('.current-time');
-const searchBtn = document.querySelector('.search-btn');
-const inputData = document.querySelector('.input-data');
+const headerBar = document.querySelector(".header-bar");
+const currentTime = document.querySelector(".current-time");
+const searchBtn = document.querySelector(".search-btn");
+const inputData = document.querySelector(".input-data");
 
 const blueColor = document.querySelector(".blue");
 const redColor = document.querySelector(".red");
@@ -22,7 +23,7 @@ const TownDate = document.querySelector(".town-date");
 const TownHumidity = document.querySelector(".town-humidity");
 
 // variables
-let latitude, longitude, query;
+let latitude, longitude, query, queriedFromSearch;
 const metric='&units=metric'
 const apiKey='&appid=abdd1f82a9fdc06feedefef68b5f4125'
 const apiEndpoint ='https://api.openweathermap.org/data/2.5/weather?'
@@ -41,6 +42,8 @@ const menuDisplay=()=>{
     menuBtn.classList.toggle("close");
     
 }
+
+// event handler
 menuBtn.addEventListener('click', menuDisplay)
 
 let btnMode = document.getElementsByClassName("modes");
@@ -149,7 +152,8 @@ function search(){
         const icon = 'http://openweathermap.org/img/wn/'+ data.weather[0].icon+'@2x.png';
 
         cityIcon.src = icon
-        cityName.innerText = data.name
+        queriedFromSearch = data.name
+        cityName.innerText = queriedFromSearch
         TownHumidity.innerText= `Humidity: ${data.main.humidity}%`
         TempId.innerText = Math.floor(tempr)
         console.log(data)
@@ -157,6 +161,24 @@ function search(){
     .catch(err => alert("wrong city name"));
     
     inputData.value = ""    // clear input box
+
+    // get query
+
+    let recent = []
+
+    let recentValue = {
+        locationName: queriedFromSearch,
+        favorite:false,
+    }
+
+    recent.push(recentValue)
+    
+    localStorage.setItem("recent", recent)
+
+    for(let i=0; i<localStorage.getItem("recent").length; i++){
+        console.log(localStorage.getItem("recent"))
+    }
+
 }
 searchBtn.addEventListener('click', function(event){
     search()
@@ -171,5 +193,19 @@ document.addEventListener('keydown', function(event){
         }
     }
 })
-// event handler
-menuBtn.addEventListener('click', menuDisplay)
+// navigation section
+function changeTab(event){
+    const activeTab = document.querySelectorAll(".active")
+    activeTab.forEach((e)=>{
+        e.className = e.className.replace("active","")
+    })
+   event.target.className = "active"
+}
+navigation.addEventListener("click", changeTab, false)
+
+
+// Models
+
+// "recent":[{location1Name:string, favorite:boolean}, {location2:string, favorite:boolean},...]
+// "favorites":[{location1Name:string, favorite:boolean}, {location1Name:string, favorite:boolean},...]
+// "suggestion":[{location1Name:string, favorite:boolean}, {location1Name:string, favorite:boolean},...]
