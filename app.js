@@ -23,7 +23,10 @@ const TownDate = document.querySelector(".town-date");
 const TownHumidity = document.querySelector(".town-humidity");
 
 // variables
-let latitude, longitude, query, queriedFromSearch;
+let latitude, longitude, query, queriedFromSearch, recentsList, recentModel;
+let recent = []
+
+// parameters
 const metric='&units=metric'
 const apiKey='&appid=abdd1f82a9fdc06feedefef68b5f4125'
 const apiEndpoint ='https://api.openweathermap.org/data/2.5/weather?'
@@ -95,6 +98,7 @@ let date,dayName,time,day;
 window.onload = (e) => {
     getLocation()
     currentCityTime()
+    displayRecents()
     date = new Date()
 }
 
@@ -137,7 +141,7 @@ function getLocation(){
             console.log(data)
 
         })
-        }, (error)=>{
+        }, (err)=>{
             console.log(`ERROR(${err.code}): ${err.message}`);
         }, {enableAccuracy:true, timeout:5000})
 }
@@ -156,30 +160,59 @@ function search(){
         cityName.innerText = queriedFromSearch
         TownHumidity.innerText= `Humidity: ${data.main.humidity}%`
         TempId.innerText = Math.floor(tempr)
+
+        recentModel = {
+            Location:queriedFromSearch,
+            favorite:false
+        }
+
+        recent.push(recentModel)
+        console.log(recent)
+        displayRecents()
+
         console.log(data)
-    })
-    .catch(err => alert("wrong city name"));
+    }).catch(err => alert(err));
     
     inputData.value = ""    // clear input box
-
-    // get query
-
-    let recent = []
-
-    let recentValue = {
-        locationName: queriedFromSearch,
-        favorite:false,
-    }
-
-    recent.push(recentValue)
-    
-    localStorage.setItem("recent", recent)
-
-    for(let i=0; i<localStorage.getItem("recent").length; i++){
-        console.log(localStorage.getItem("recent"))
-    }
-
 }
+
+function displayRecents(){
+    localStorage.setItem("recent", JSON.stringify(recent))
+
+    recentsList = JSON.parse(localStorage.getItem("recent"))
+
+    recentsList.forEach(recentItem =>{
+        query = 'q='+recentItem.Location
+
+        fetch(apiEndpoint+query+metric+apiKey)
+        .then(response => response.json())
+        .then(data =>{
+            let tempr = Math.floor(data.main.temp) 
+            const icon = 'http://openweathermap.org/img/wn/'+ data.weather[0].icon+'@2x.png';
+
+            let cardContent = `
+                <div class="card">
+                    <div class="card-city">
+                        <div class="card-city-name">
+                            <h1 class="name">${recentItem.Location}</h1>
+                            <h2 class="time">17 : 24</h2>
+                        </div>
+
+                        <div class="date">Friday, 23</div>
+                    </div>
+                    <div class="card-temp">
+                        <h2 class="temp-name">${tempr}&deg;C</h2>
+                        <span class="temp-icon">
+                            <img src=${icon} alt="" />
+                        </span>
+                    </div>
+                </div>
+            `
+            document.querySelector(".cards").innerHTML += cardContent
+        }).catch(err=> alert("wrong city name"))
+    })
+}
+
 searchBtn.addEventListener('click', function(event){
     search()
 })

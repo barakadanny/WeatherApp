@@ -302,7 +302,9 @@ div.res-bottom h3 {
 .navigation li.active {
   background-color: var(--primary-color);
 }
-
+/* .cards{
+  overflow-y: scroll;
+} */
 .card {
   background-color: var(--second-color);
   display: flex;
