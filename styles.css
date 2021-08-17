@@ -187,6 +187,25 @@ div.color img.active {
   margin: auto;
   display: flex;
   align-items: center;
+  position: relative;
+}
+.auto-complete-ground {
+  position: absolute;
+  width: 100%;
+  /* bottom: 1px; */
+  top: 69px;
+  background-color: var(--primary-color);
+  z-index: 30;
+  display: none;
+}
+.auto-active {
+  display: inline-block;
+}
+.auto-complete-ground li {
+  color: var(--text-color);
+  border-top: 1px solid var(--second-color);
+  padding: 5px 10px;
+  cursor: pointer;
 }
 .main-left div.search-section div.search {
   width: 100%;
@@ -353,9 +372,9 @@ div.date {
   padding-top: 15px;
 }
 /* card favorite display */
-.no-fav{
+.no-fav {
   color: red;
-  font-size:20px;
+  font-size: 20px;
   text-align: center;
 }
 /* tablets */
@@ -373,6 +392,10 @@ div.date {
   }
   .main-right {
     width: 50%;
+  }
+  /* search section area */
+  .auto-complete-ground {
+    top: 50px;
   }
 }
 /* mobile */
@@ -451,6 +474,10 @@ div.date {
   }
   .navigation li.active {
     background-color: var(--primary-color);
+  }
+  /* search section area */
+  .auto-complete-ground {
+    top: 37px;
   }
   /* card responsive */
   /* .card {
