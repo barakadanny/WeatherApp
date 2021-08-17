@@ -352,6 +352,12 @@ div.date {
 .temp-icon {
   padding-top: 15px;
 }
+/* card favorite display */
+.no-fav{
+  color: red;
+  font-size:20px;
+  text-align: center;
+}
 /* tablets */
 @media screen and (max-width: 1024px) {
   .main-left {

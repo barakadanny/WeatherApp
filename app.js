@@ -21,10 +21,10 @@ const CurrentCityName = document.querySelector(".current-town");
 const CurrentCityTime = document.querySelector(".current-town-time");
 const TownDate = document.querySelector(".town-date");
 const TownHumidity = document.querySelector(".town-humidity");
+const Cards = document.querySelector(".cards");
 
 // variables
-let latitude, longitude, query, queriedFromSearch, recentsList, recentModel;
-let recent = []
+let latitude, longitude, query;
 
 // parameters
 const metric='&units=metric'
@@ -97,8 +97,8 @@ let date,dayName,time,day;
 
 window.onload = (e) => {
     getLocation()
-    currentCityTime()
     displayRecents()
+    currentCityTime()
     date = new Date()
 }
 
@@ -145,10 +145,12 @@ function getLocation(){
             console.log(`ERROR(${err.code}): ${err.message}`);
         }, {enableAccuracy:true, timeout:5000})
 }
+// search variables
+let queriedFromSearch, recentsList = JSON.parse(localStorage.getItem("recent")) || [], recentModel;
 
 function search(){
     query = 'q='+inputData.value
-
+    // recentsList=[]
     fetch(apiEndpoint+query+metric+apiKey)
     .then(response => response.json())
     .then(data => {
@@ -166,22 +168,17 @@ function search(){
             favorite:false
         }
 
-        recent.push(recentModel)
-        console.log(recent)
+        recentsList.push(recentModel)
+        localStorage.setItem("recent", JSON.stringify(recentsList))
         displayRecents()
-
-        console.log(data)
     }).catch(err => alert(err));
     
     inputData.value = ""    // clear input box
 }
 
 function displayRecents(){
-    localStorage.setItem("recent", JSON.stringify(recent))
-
-    recentsList = JSON.parse(localStorage.getItem("recent"))
-
     recentsList.forEach(recentItem =>{
+        console.log(recentItem.Location)
         query = 'q='+recentItem.Location
 
         fetch(apiEndpoint+query+metric+apiKey)
@@ -208,8 +205,8 @@ function displayRecents(){
                     </div>
                 </div>
             `
-            document.querySelector(".cards").innerHTML += cardContent
-        }).catch(err=> alert("wrong city name"))
+            Cards.innerHTML += cardContent
+        }).catch(err=> alert(err))
     })
 }
 
@@ -239,6 +236,6 @@ navigation.addEventListener("click", changeTab, false)
 
 // Models
 
-// "recent":[{location1Name:string, favorite:boolean}, {location2:string, favorite:boolean},...]
-// "favorites":[{location1Name:string, favorite:boolean}, {location1Name:string, favorite:boolean},...]
+// "recent":[{location1Name:string, favorite:boolean:false}, {location2:string, favorite:boolean:false},...]
+// "favorites":[{location1Name:string, favorite:boolean:true}, {location1Name:string, favorite:boolean:true},...]
 // "suggestion":[{location1Name:string, favorite:boolean}, {location1Name:string, favorite:boolean},...]
