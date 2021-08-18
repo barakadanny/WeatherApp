@@ -21,7 +21,6 @@ const CurrentCityName = document.querySelector(".current-town");
 const CurrentCityTime = document.querySelector(".current-town-time");
 const TownDate = document.querySelector(".town-date");
 const TownHumidity = document.querySelector(".town-humidity");
-const Cards = document.querySelector(".cards");
 
 // auto complete selections
 const autoCompleteGround = document.querySelector(".auto-complete-ground");
@@ -48,7 +47,6 @@ const menuDisplay=()=>{
     main.classList.toggle('set-black');
     setting.classList.toggle('set-active');
     menuBtn.classList.toggle("close");
-    
 }
 
 // event handler
@@ -99,6 +97,121 @@ for (let i = 0; btnMode.length > i ; i++) {
  }
 
 let date,dayName,time,day;
+
+const cardSelection = document.querySelector(".cards")
+const cardContent = document.querySelector(".cards-content")
+const cardFavorite = document.querySelector(".cards-favorite")
+
+function createCard(tempr, icon, recentItem){
+    //create div for the card
+    const divContainer = document.createElement("div");
+    divContainer.classList.add("card");
+    //create div for left side
+    const divLeftSide = document.createElement("div");
+    divLeftSide.classList.add("card-city");
+
+    const cardCityName = document.createElement("div");
+    cardCityName.classList.add("card-city-name");
+
+    const city_name = document.createElement("h1");
+    city_name.classList.add("name");
+    //add city gotten from the API
+    city_name.innerText = recentItem.Location
+
+    const city_time = document.createElement("h2");
+    city_time.classList.add("time");
+    city_time.innerText = "17 : 12"
+    cardCityName.appendChild(city_name)
+    cardCityName.appendChild(city_time)
+
+    const cardCityDate = document.createElement("div");
+    cardCityDate.classList.add("date");
+
+    cardCityDate.innerText = "Monday, 23"
+    divLeftSide.appendChild(cardCityName)
+    divLeftSide.appendChild(cardCityDate)
+    divContainer.appendChild(divLeftSide)
+
+
+    //create div for middle side
+    const divMiddleSide = document.createElement("div");
+    divMiddleSide.classList.add("card-temp");
+    
+    const temp_name = document.createElement("h2");
+    temp_name.classList.add("temp_name");
+        //add temperature gotten from the API
+    temp_name.innerHTML = `${tempr} &deg;C`
+    divMiddleSide.appendChild(temp_name)
+
+    const temp_icon = document.createElement("span");
+    temp_icon.classList.add("temp_icon");
+
+    const temp_image = document.createElement("img");
+    //add image gotten from the API
+    temp_image.src=icon
+    temp_icon.appendChild(temp_image)
+
+
+    divMiddleSide.appendChild(temp_icon)
+    divContainer.appendChild(divMiddleSide)
+    //create div fo the right side
+    const divRightSide = document.createElement("div");
+    divRightSide.classList.add("card-buttons");
+    const i_star = document.createElement("i");
+    i_star.classList.add("fa")
+    i_star.classList.add("fa-star-o");
+
+    let clicked = false
+    i_star.onclick=(e)=>{
+        let recents = JSON.parse(localStorage.getItem("recent"))
+        let list2 = []
+        recents.forEach(recent => {
+            if(recent.Location == city_name.innerText){
+                let result = recent
+                recents.forEach(other => {
+                    if(other != result){
+                        list2.push(other)
+                    }
+                });
+                
+                if(clicked == false){
+                    result.favorite = true
+                    clicked = true
+                }else{
+                    result.favorite = false
+                    clicked=false
+                }
+                
+                list2.push(result)
+            }
+        })
+        localStorage.setItem("recent", JSON.stringify(list2))
+    }
+
+    const i_trash = document.createElement("i");
+    i_trash.classList.add("fa")
+    i_trash.classList.add("fa-trash-o");
+    i_trash.onclick=(e)=>{
+        console.log(e)
+    }
+
+    divRightSide.appendChild(i_star)
+    divRightSide.appendChild(i_trash)
+    divContainer.appendChild(divRightSide)
+
+    // let toDisplay
+
+    // if(recent){
+    //     cardContent
+    //     toDisplay = cardContent
+    // }elseif(favorite){
+    //     cardFavorite
+    //     toDisplay = cardFavorite
+    // }
+
+    cardSelection.appendChild(divContainer)
+    
+}
 
 window.onload = (e) => {
     getLocation()
@@ -183,7 +296,7 @@ function search(){
 
 function displayRecents(){
     recentsList.forEach(recentItem =>{
-        console.log(recentItem.Location)
+        // console.log(recentItem.Location)
         query = 'q='+recentItem.Location
 
         fetch(apiEndpoint+query+metric+apiKey)
@@ -192,28 +305,13 @@ function displayRecents(){
             let tempr = Math.floor(data.main.temp) 
             const icon = 'http://openweathermap.org/img/wn/'+ data.weather[0].icon+'@2x.png';
 
-            let cardContent = `
-                <div class="card">
-                    <div class="card-city">
-                        <div class="card-city-name">
-                            <h1 class="name">${recentItem.Location}</h1>
-                            <h2 class="time">17 : 24</h2>
-                        </div>
+            createCard(tempr, icon, recentItem)
+            
 
-                        <div class="date">Friday, 23</div>
-                    </div>
-                    <div class="card-temp">
-                        <h2 class="temp-name">${tempr}&deg;C</h2>
-                        <span class="temp-icon">
-                            <img src=${icon} alt="" />
-                        </span>
-                    </div>
-                </div>
-            `
-            Cards.innerHTML += cardContent
         }).catch(err=> alert(err))
     })
 }
+
 
 searchBtn.addEventListener('click', function(event){
     search()
@@ -228,6 +326,18 @@ document.addEventListener('keydown', function(event){
         }
     }
 })
+
+function checkFavorite(){
+    let list = JSON.parse(localStorage.getItem("recent"))
+    list.forEach((listItem)=>{
+        if(listItem.favorite == true){
+            console.log("are true", listItem.Location)
+        }else{
+            console.log("are false", listItem.Location)
+        }
+    })
+}
+
 // navigation section
 function changeTab(event){
     const activeTab = document.querySelectorAll(".active")
@@ -238,14 +348,20 @@ function changeTab(event){
 }
 navigation.addEventListener("click", changeTab, false)
 
+// create a class with hidden property that will be assigned to cards favorites by default.
+// append all the cards to cards-content div by default
+// fetch through the local host and assign all the favorite:true to cards favorites div
+// when click to favorite
+// add the class hidden to cards content
+// and add a class display block to cards favorite, for it to finally display 
 
 // Models
 
 // "recent":[{location1Name:string, favorite:boolean:false}, {location2:string, favorite:boolean:false},...]
 // "favorites":[{location1Name:string, favorite:boolean:true}, {location1Name:string, favorite:boolean:true},...]
 // "suggestion":[{location1Name:string, favorite:boolean}, {location1Name:string, favorite:boolean},...]
-// auto complete feature function
 
+// Auto complete feature function
 inputData.onkeyup =(e)=>{
     let inData=e.target.value;
     let emptyArray = [];
